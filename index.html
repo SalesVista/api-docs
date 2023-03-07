@@ -1,0 +1,549 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta
+            name="description"
+            content="Documentation for the SalesVista API"
+        >
+    <title>SalesVista API Reference</title>
+    <link href="images/favicon-125d7c48.png" rel="icon" type="image/png" />
+
+    <style media="screen">
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cpf {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s, .highlight .sa, .highlight .dl {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf, .highlight .fm {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv, .highlight .vm {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #f92672;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <style media="print">
+      * {
+        -webkit-transition:none!important;
+        transition:none!important;
+      }
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #586e75;
+}
+.highlight .err {
+  color: #002b36;
+  background-color: #dc322f;
+}
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1, .highlight .cs {
+  color: #657b83;
+}
+.highlight .cp {
+  color: #b58900;
+}
+.highlight .nt {
+  color: #b58900;
+}
+.highlight .o, .highlight .ow {
+  color: #93a1a1;
+}
+.highlight .p, .highlight .pi {
+  color: #93a1a1;
+}
+.highlight .gi {
+  color: #859900;
+}
+.highlight .gd {
+  color: #dc322f;
+}
+.highlight .gh {
+  color: #268bd2;
+  background-color: #002b36;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #6c71c4;
+}
+.highlight .kc {
+  color: #cb4b16;
+}
+.highlight .kt {
+  color: #cb4b16;
+}
+.highlight .kd {
+  color: #cb4b16;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #859900;
+}
+.highlight .sa {
+  color: #6c71c4;
+}
+.highlight .sr {
+  color: #2aa198;
+}
+.highlight .si {
+  color: #d33682;
+}
+.highlight .se {
+  color: #d33682;
+}
+.highlight .nn {
+  color: #b58900;
+}
+.highlight .nc {
+  color: #b58900;
+}
+.highlight .no {
+  color: #b58900;
+}
+.highlight .na {
+  color: #268bd2;
+}
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
+  color: #859900;
+}
+.highlight .ss {
+  color: #859900;
+}
+    </style>
+    <link href="stylesheets/screen-ff7ed32d.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print-966d6edc.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all-b12a2749.js"></script>
+
+    <script>
+      $(function() { setupCodeCopy(); });
+    </script>
+  </head>
+
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar-cad8cdcb.png" alt="" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo-354b7f81.svg" class="logo" alt="" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="javascript">javascript</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <ul id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#assigned-region" class="toc-h1 toc-link" data-title="Assigned Region">Assigned Region</a>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+          </li>
+          <li>
+            <a href="#org" class="toc-h1 toc-link" data-title="Org">Org</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-org" class="toc-h2 toc-link" data-title="Get Org">Get Org</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+          </li>
+      </ul>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/SalesVista/api-client-node'>View the Node.js SDK</a></li>
+            <li><a href='https://salesvista.app/signin'>Sign in to SalesVista</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Welcome to the SalesVista API! This docs site is meant to help you use the SalesVista API to access sales and compensation data for your organization.</p>
+
+<p>Throughout the docs, there are language examples for curl (shell) and Node.js (javascript). You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right or using the nav menu on smaller screens.</p>
+<h1 id='assigned-region'>Assigned Region</h1>
+<p>SalesVista hosts your organization&#39;s data within one of several production environments. Each environment represents an &quot;assigned region&quot; and is hosted at a different domain.</p>
+
+<p>For sake of simplicity, the docs will use <code>api.salesvista.app</code> as the domain for all sample endpoints, but you should use the domain associated with your organization&#39;s assigned region when accessing the API.</p>
+
+<p>If you do not know your organization&#39;s assigned region or the domain associated with your assigned region, please contact your SalesVista customer success representative.</p>
+<h1 id='authentication'>Authentication</h1>
+<blockquote>
+<p>Use your client credentials to get an access token:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Get an access token using your client id and secret</span>
+curl https://api.salesvista.app/oauth/v1/token <span class="se">\</span>
+  <span class="nt">-u</span> <span class="s1">'client_id:client_secret'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'grant_type=client_credentials'</span>
+
+<span class="c"># Use the access token and org id</span>
+<span class="c"># Plug in your own value for access_token and org_id</span>
+curl https://api.salesvista.app/rest/v1/orgs/org_id <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Bearer access_token"</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">svClient</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@salesvista/client</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">svClient</span><span class="p">.</span><span class="nx">configure</span><span class="p">({</span>
+  <span class="c1">// your client credentials</span>
+  <span class="na">id</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SALESVISTA_CLIENT_ID</span><span class="p">,</span>
+  <span class="na">secret</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SALESVISTA_CLIENT_SECRET</span><span class="p">,</span>
+  <span class="c1">// use the domain associated with your org's assigned region</span>
+  <span class="na">baseUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://api.salesvista.app</span><span class="dl">'</span>
+<span class="p">})</span>
+
+<span class="c1">// You can manually get an access token via the following, but note</span>
+<span class="c1">// the SDK library will automatically manage access tokens for you</span>
+<span class="c1">// when you use normal API endpoints, so the following is not necessary.</span>
+<span class="c1">// It is just for illustrative purposes.</span>
+<span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">svClient</span><span class="p">.</span><span class="nx">getToken</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">access token: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">token</span><span class="p">.</span><span class="nx">access_token</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">org id: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">token</span><span class="p">.</span><span class="nx">org_id</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>An example JSON response for an access token:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xtSab92x5vSDacQanmCfUjuAXx41ix0vTMioThzyhAyy9w"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">172800</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"org_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cf69g0r2cl9zpn4b9000ihdnp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bearer"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>The SalesVista API uses OAuth2 for authentication.</p>
+
+<p>Before you can use the API, you must have a registered oauth client. At this time, oauth clients must be registered manually by the SalesVista team. To request API access, please contact your SalesVista customer success representative or send an email to tech@salesvista.com.</p>
+
+<p>Once you have been granted client credentials, you can use the <code>client_credentials</code> oauth grant type to receive a bearer access token, which can be used to access data via specific HTTP endpoints.</p>
+
+<aside class="notice">
+Make sure to keep your client secret secret! It should not be deployed with or exposed to client-side code. If you think your client secret may have been compromised, please contact SalesVista to revoke the old secret and receive a new one.
+</aside>
+
+<p>The access token response body will be in JSON and will contain an <code>access_token</code> property and an <code>org_id</code> property. Use the <code>access_token</code> value in the <code>Authorization</code> request header for every subsequent request. Use the <code>org_id</code> value when necessary when calling specific endpoints.</p>
+
+<p>When using the Node.js SDK, access tokens will be automatically managed for you. They will be automatically fetched when necessary and stored in memory. If you want to customize how tokens are stored, you can specify your own <code>cacheStrategy</code>. See the <a href="https://github.com/SalesVista/api-client-node#auth-token-storage">SDK docs</a> for more info.</p>
+<h1 id='org'>Org</h1><h2 id='get-org'>Get Org</h2>
+<blockquote>
+<p>Get basic org info:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Plug in your own value for access_token and org_id</span>
+curl https://api.salesvista.app/rest/v1/orgs/org_id <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Bearer access_token"</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">// Your access token and org id will be stored in memory and used automatically.</span>
+<span class="kd">const</span> <span class="nx">org</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">svClient</span><span class="p">.</span><span class="nx">getOrg</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">org</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+<blockquote>
+<p>Sample JSON response for an org (without counts):</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cf69g0r2cl9zpn4b9000ihdnp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"orgName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"companyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Example"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"fyStart"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01-01"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"aggregationInterval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"monthly"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"fiscalYearUseStartDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"currentWorkingFiscalYear"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cmdd4fp2bl9zpn4cg000khdnp"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FY2022"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-01-01"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-12-31"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint fetches information about your organization within SalesVista.</p>
+<h3 id='endpoint'>Endpoint</h3>
+<p><code>GET /rest/v1/orgs/:id</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>withCounts</td>
+<td>false</td>
+<td>If set to true, the response will include entity counts across the org.</td>
+</tr>
+<tr>
+<td>from</td>
+<td>none</td>
+<td>The start date to limit counts by.</td>
+</tr>
+<tr>
+<td>to</td>
+<td>none</td>
+<td>The end date to limit counts by.</td>
+</tr>
+<tr>
+<td>fiscalYearId</td>
+<td>none</td>
+<td>Get counts for this fiscal year (instead of using from/to).</td>
+</tr>
+<tr>
+<td>fiscalPeriodId</td>
+<td>none</td>
+<td>Get counts for this fiscal period (instead of using from/to).</td>
+</tr>
+</tbody></table>
+<h1 id='errors'>Errors</h1>
+<p>The following common error codes are used across all endpoints:</p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request</td>
+<td>There is a problem with the request that must be addressed by the client.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>Your access token was not provided or is expired.</td>
+</tr>
+<tr>
+<td>402</td>
+<td>Payment Required</td>
+<td>Your organization&#39;s subscription is not in good standing.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>Your client is not authorized to make this request.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>The resource requested does not exist.</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed</td>
+<td>This HTTP method is not allowed for this URL/route.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests</td>
+<td>Your client has exceeded its allowed API limits.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>An unexpected error occurred within SalesVista. Please try again later or contact SalesVista for help.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable</td>
+<td>The SalesVista API is temporarily offline for maintenance. Please try again later.</td>
+</tr>
+<tr>
+<td>504</td>
+<td>Gateway Timeout</td>
+<td>The API is processing your request but took too long to respond.</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
