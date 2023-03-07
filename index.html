@@ -332,6 +332,17 @@
               </ul>
           </li>
           <li>
+            <a href="#sales" class="toc-h1 toc-link" data-title="Sales">Sales</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#list-sales" class="toc-h2 toc-link" data-title="List Sales">List Sales</a>
+                  </li>
+                  <li>
+                    <a href="#get-sale-totals" class="toc-h2 toc-link" data-title="Get Sale Totals">Get Sale Totals</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -350,7 +361,9 @@
 <h1 id='assigned-region'>Assigned Region</h1>
 <p>SalesVista hosts your organization&#39;s data within one of several production environments. Each environment represents an &quot;assigned region&quot; and is hosted at a different domain.</p>
 
-<p>For sake of simplicity, the docs will use <code>api.salesvista.app</code> as the domain for all sample endpoints, but you should use the domain associated with your organization&#39;s assigned region when accessing the API.</p>
+<aside class="notice">
+For sake of simplicity, the docs will use <code>api.salesvista.app</code> as the domain for all sample endpoints, but you should use the domain associated with your organization's assigned region when accessing the API.
+</aside>
 
 <p>If you do not know your organization&#39;s assigned region or the domain associated with your assigned region, please contact your SalesVista customer success representative.</p>
 <h1 id='authentication'>Authentication</h1>
@@ -383,6 +396,8 @@ curl https://api.salesvista.app/rest/v1/orgs/org_id <span class="se">\</span>
 <span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">svClient</span><span class="p">.</span><span class="nx">getToken</span><span class="p">()</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">access token: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">token</span><span class="p">.</span><span class="nx">access_token</span><span class="p">)</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">org id: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">token</span><span class="p">.</span><span class="nx">org_id</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">orgId</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">svClient</span><span class="p">.</span><span class="nx">getOrgId</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">org id: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">orgId</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>An example JSON response for an access token:</p>
@@ -398,11 +413,13 @@ curl https://api.salesvista.app/rest/v1/orgs/org_id <span class="se">\</span>
 
 <p>Before you can use the API, you must have a registered oauth client. At this time, oauth clients must be registered manually by the SalesVista team. To request API access, please contact your SalesVista customer success representative or send an email to tech@salesvista.com.</p>
 
-<p>Once you have been granted client credentials, you can use the <code>client_credentials</code> oauth grant type to receive a bearer access token, which can be used to access data via specific HTTP endpoints.</p>
+<p>Once you have been granted client credentials, you can use the <a href="https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/"><code>client_credentials</code> oauth grant type</a> to receive a bearer access token, which can be used to access data via specific HTTP endpoints.</p>
 
-<aside class="notice">
-Make sure to keep your client secret secret! It should not be deployed with or exposed to client-side code. If you think your client secret may have been compromised, please contact SalesVista to revoke the old secret and receive a new one.
+<aside class="warning">
+Make sure to keep your client secret <b>secret</b>! It should not be deployed with or exposed to client-side code. If you think your client secret may have been compromised, please contact SalesVista to revoke the old secret and receive a new one.
 </aside>
+
+<p>The request body for oauth requests should use the <code>application/x-www-form-urlencoded</code> content type.</p>
 
 <p>The access token response body will be in JSON and will contain an <code>access_token</code> property and an <code>org_id</code> property. Use the <code>access_token</code> value in the <code>Authorization</code> request header for every subsequent request. Use the <code>org_id</code> value when necessary when calling specific endpoints.</p>
 
@@ -415,7 +432,7 @@ Make sure to keep your client secret secret! It should not be deployed with or e
 curl https://api.salesvista.app/rest/v1/orgs/org_id <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: Bearer access_token"</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">// Your access token and org id will be stored in memory and used automatically.</span>
-<span class="kd">const</span> <span class="nx">org</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">svClient</span><span class="p">.</span><span class="nx">getOrg</span><span class="p">()</span>
+<span class="kd">const</span> <span class="nx">org</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">svClient</span><span class="p">.</span><span class="nx">org</span><span class="p">.</span><span class="nx">getOrg</span><span class="p">()</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">org</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 </code></pre></div>
 <blockquote>
@@ -445,34 +462,487 @@ curl https://api.salesvista.app/rest/v1/orgs/org_id <span class="se">\</span>
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
 <th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>withCounts</td>
+<td>boolean</td>
 <td>false</td>
-<td>If set to true, the response will include entity counts across the org.</td>
+<td>If set to true, the response will include entity counts across the org</td>
 </tr>
 <tr>
 <td>from</td>
+<td>date</td>
 <td>none</td>
-<td>The start date to limit counts by.</td>
+<td>The start date to limit counts by e.g. <code>2023-01-01</code></td>
 </tr>
 <tr>
 <td>to</td>
+<td>date</td>
 <td>none</td>
-<td>The end date to limit counts by.</td>
+<td>The end date to limit counts by e.g. <code>2023-01-31</code></td>
 </tr>
 <tr>
 <td>fiscalYearId</td>
-<td>none</td>
-<td>Get counts for this fiscal year (instead of using from/to).</td>
+<td>id or enum</td>
+<td>current</td>
+<td>Get counts for this fiscal year (instead of using from/to), supports pseudo-id values <code>current</code>, <code>previous</code>, and <code>next</code></td>
 </tr>
 <tr>
 <td>fiscalPeriodId</td>
+<td>id or enum</td>
 <td>none</td>
-<td>Get counts for this fiscal period (instead of using from/to).</td>
+<td>Get counts for this fiscal period (instead of using from/to), supports pseudo-id values <code>current</code>, <code>previous</code>, and <code>next</code></td>
+</tr>
+</tbody></table>
+<h1 id='sales'>Sales</h1><h2 id='list-sales'>List Sales</h2>
+<blockquote>
+<p>Get a paginated list of sales:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Plug in your own value for access_token and org_id</span>
+curl <span class="nt">-H</span> <span class="s2">"Authorization: Bearer access_token"</span> <span class="se">\</span>
+<span class="s1">'https://api.salesvista.app/rest/v1/orgs/org_id/sales?page=1&amp;size=500&amp;fiscalPeriodId=current'</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">// Your access token and org id will be stored in memory and used automatically.</span>
+<span class="kd">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">page</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">size</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+  <span class="na">fiscalPeriodId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">current</span><span class="dl">'</span>
+<span class="p">}</span>
+<span class="kd">const</span> <span class="nx">sales</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">svClient</span><span class="p">.</span><span class="nx">sales</span><span class="p">.</span><span class="nx">listSales</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">sales</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+<blockquote>
+<p>Sample JSON response for a paginated list of sales:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"query"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sort"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"prop"</span><span class="p">:</span><span class="w"> </span><span class="s2">"effectiveDate"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asc"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"prop"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transactionDate"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asc"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"prop"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transactionNum"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asc"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"fiscalPeriodId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cozeyhrkrl9zpn4df000ohdnp"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c20myllibl9zy1kv6006nvinp"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"rep"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c6nz9hyh5l9zx06a1001rmqnp"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rep1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"repCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rep1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"givenName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Example"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"familyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rep"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"deletedAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"snapshotId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cwmipm32jldkgijsr001kvuhv"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isInactive"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"team"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c1fejnjqrl9zpojjo0029hdnp"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Active Reps"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"snapshotId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cutufrgfkldkgijsz0022vuhv"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"productCategory"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"snapshotId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c7ovps836ldkgijuo002uvuhv"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c7ovps836ldkgijuo002uvuhv"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"customerCategory"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ckzdbytnfl9zqdc90008ahdnp"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"deletedAt"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"snapshotId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cp4cbgroaldkgijsw001vvuhv"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"productCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"displayName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"customer"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"contract"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"effectiveDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-02-04"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"transactionDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-02-04"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"transactionNum"</span><span class="p">:</span><span class="w"> </span><span class="mi">100001</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"annualContractValue"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"annualContractValueActual"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"annualContractValueCompensable"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"annualContractValueAttained"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"extendedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mf">1052.8</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"extendedAmountActual"</span><span class="p">:</span><span class="w"> </span><span class="mf">1052.8</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"extendedAmountCompensable"</span><span class="p">:</span><span class="w"> </span><span class="mf">1052.8</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"extendedAmountAttained"</span><span class="p">:</span><span class="w"> </span><span class="mf">1052.8</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"grossMargin"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"grossMarginActual"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"grossMarginCompensable"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"grossMarginAttained"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"volumeActual"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"volumeCompensable"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"volumeAttained"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"referenceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Some note"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"compensable"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"txn"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-03-02T17:59:43.842Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-03-02T17:59:43.842Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"reports"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ce1itng39la03j67p000w1hnp"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"closed"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FEB"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"stale"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"labels"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"territory__sv"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cz5a504m2l9zxgp18002ivinp"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Southeast"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"externalKey"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"batch"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ce0gfoiral9zy1ktz006mvinp"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SalesVista_Sales_1667411461586.csv"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"projectedCommissionWithDeferred"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"projectedCompensationWithDeferred"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"compensation"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.86</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"commission"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.86</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bonus"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"deferredCommission"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"deferredCommissionPrereq"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"deferredCommissionEvent"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"commissionWithDeferred"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.86</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"compensationWithDeferred"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.86</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"matching"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">284</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"more"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Use this endpoint to fetch a paginated list of sales that exist in SalesVista for your organization.</p>
+
+<p>Sales represent individual transactions (e.g. invoice line items) that are used as the input for performance-based compensation.</p>
+<h3 id='endpoint-2'>Endpoint</h3>
+<p><code>GET /rest/v1/orgs/:id/sales</code></p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>integer</td>
+<td>1</td>
+<td>The page number to fetch across matching results</td>
+</tr>
+<tr>
+<td>size</td>
+<td>integer</td>
+<td>50</td>
+<td>The number of sales to include per page</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>string</td>
+<td>effectiveDate,asc</td>
+<td>The properties (and optional associated directions) to sort sales by e.g. <code>effectiveDate,desc,transactionNum,desc</code></td>
+</tr>
+<tr>
+<td>teamId</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more teams</td>
+</tr>
+<tr>
+<td>includeChildTeams</td>
+<td>boolean</td>
+<td>false</td>
+<td>Whether child teams should be included when filtering by team</td>
+</tr>
+<tr>
+<td>productCategoryId</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more product categories</td>
+</tr>
+<tr>
+<td>customerCategoryId</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more customer categories</td>
+</tr>
+<tr>
+<td>labelId</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more labels</td>
+</tr>
+<tr>
+<td>repId</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more reps/employees</td>
+</tr>
+<tr>
+<td>id</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more sale ids</td>
+</tr>
+<tr>
+<td>productId</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more products</td>
+</tr>
+<tr>
+<td>customerId</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more customers</td>
+</tr>
+<tr>
+<td>from</td>
+<td>date</td>
+<td>none</td>
+<td>Filter sales by effective date using this start date by e.g. <code>2023-01-01</code></td>
+</tr>
+<tr>
+<td>to</td>
+<td>date</td>
+<td>none</td>
+<td>Filter sales by effective date using this end date by e.g. <code>2023-01-31</code></td>
+</tr>
+<tr>
+<td>fiscalYearId</td>
+<td>id or enum</td>
+<td>none</td>
+<td>Filter sales by effective date using this fiscal year (instead of using from/to), supports pseudo-id values <code>current</code>, <code>previous</code>, and <code>next</code></td>
+</tr>
+<tr>
+<td>fiscalPeriodId</td>
+<td>id or enum</td>
+<td>none</td>
+<td>Filter sales by effective date using this fiscal period (instead of using from/to), supports pseudo-id values <code>current</code>, <code>previous</code>, and <code>next</code></td>
+</tr>
+<tr>
+<td>effectiveDate</td>
+<td>date or array</td>
+<td>none</td>
+<td>Filter sales by one or more specific effective dates</td>
+</tr>
+<tr>
+<td>effectiveDateAfter</td>
+<td>date</td>
+<td>none</td>
+<td>Filter sales by effective date that are equal to or greater than this value</td>
+</tr>
+<tr>
+<td>effectiveDateBefore</td>
+<td>date</td>
+<td>none</td>
+<td>Filter sales by effective date that are equal to or less than this value</td>
+</tr>
+<tr>
+<td>transactionDate</td>
+<td>date or array</td>
+<td>none</td>
+<td>Filter sales by one or more specific transaction dates</td>
+</tr>
+<tr>
+<td>transactionDateAfter</td>
+<td>date</td>
+<td>none</td>
+<td>Filter sales by transaction date that are equal to or greater than this value</td>
+</tr>
+<tr>
+<td>transactionDateBefore</td>
+<td>date</td>
+<td>none</td>
+<td>Filter sales by transaction date that are equal to or less than this value</td>
+</tr>
+<tr>
+<td>reportId</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more compensation statements where the sales were processed and compensated for on these statements</td>
+</tr>
+<tr>
+<td>batchId</td>
+<td>id or array</td>
+<td>none</td>
+<td>Filter sales by one or more batches where the sales were created or updated in one of the given batches</td>
+</tr>
+<tr>
+<td>referenceId</td>
+<td>string</td>
+<td>none</td>
+<td>Filter sales by specific note value</td>
+</tr>
+<tr>
+<td>noteLike</td>
+<td>string</td>
+<td>none</td>
+<td>Filter sales by note where the note contains the given value</td>
+</tr>
+<tr>
+<td>transactionNum</td>
+<td>integer or array</td>
+<td>none</td>
+<td>Filter sales by one or more specific transaction numbers (human-friendly auto-generated incrementing number ids)</td>
+</tr>
+<tr>
+<td>transactionNumLike</td>
+<td>partial-integer string or array</td>
+<td>none</td>
+<td>Filter sales by transaction number where the transaction number on the sale contains the given partial value</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string or array</td>
+<td>none</td>
+<td>Filter sales that came from one or more specific sources</td>
+</tr>
+<tr>
+<td>externalKey</td>
+<td>string or array</td>
+<td>none</td>
+<td>Filter sales by one or more specific external keys (typically ids defined in an external source system)</td>
+</tr>
+<tr>
+<td>externalKeyLike</td>
+<td>string or array</td>
+<td>none</td>
+<td>Filter sales by external key where the external key on the sale contains the given value</td>
+</tr>
+<tr>
+<td>deferredAccrual</td>
+<td>boolean</td>
+<td>none</td>
+<td>Only include sales that have deferred compensation tied to them</td>
+</tr>
+<tr>
+<td>withWarnings</td>
+<td>boolean</td>
+<td>none</td>
+<td>Only include sales that have warnings that need to be addressed by a user</td>
+</tr>
+<tr>
+<td>status</td>
+<td>enum or array</td>
+<td>none</td>
+<td>Filter sales by one or more specific statuses e.g. <code>compensable</code></td>
+</tr>
+<tr>
+<td>type</td>
+<td>enum or array</td>
+<td>none</td>
+<td>Filter sales by one or more specific types e.g. <code>txn</code> or <code>churn</code></td>
+</tr>
+</tbody></table>
+<h2 id='get-sale-totals'>Get Sale Totals</h2>
+<blockquote>
+<p>Get aggregate sale totals for a given period:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Plug in your own value for access_token and org_id</span>
+curl <span class="nt">-H</span> <span class="s2">"Authorization: Bearer access_token"</span> <span class="se">\</span>
+<span class="s1">'https://api.salesvista.app/rest/v1/orgs/org_id/sale-totals?fiscalPeriodId=current'</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">// Your access token and org id will be stored in memory and used automatically.</span>
+<span class="kd">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">fiscalPeriodId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">current</span><span class="dl">'</span>
+<span class="p">}</span>
+<span class="kd">const</span> <span class="nx">sales</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">svClient</span><span class="p">.</span><span class="nx">sales</span><span class="p">.</span><span class="nx">getSaleTotals</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">sales</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+<blockquote>
+<p>Sample JSON response for aggregate sale totals:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-01-01"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-01-31"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"annualContractValueAttained"</span><span class="p">:</span><span class="w"> </span><span class="mi">40001000</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"extendedAmountAttained"</span><span class="p">:</span><span class="w"> </span><span class="mf">47384458.22</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"grossMarginAttained"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"volumeAttained"</span><span class="p">:</span><span class="w"> </span><span class="mi">136797</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"annualContractValueActual"</span><span class="p">:</span><span class="w"> </span><span class="mi">40001000</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"extendedAmountActual"</span><span class="p">:</span><span class="w"> </span><span class="mf">47384458.22</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"grossMarginActual"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"volumeActual"</span><span class="p">:</span><span class="w"> </span><span class="mi">136797</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"annualContractValueCompensable"</span><span class="p">:</span><span class="w"> </span><span class="mi">40001000</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"extendedAmountCompensable"</span><span class="p">:</span><span class="w"> </span><span class="mf">47384458.22</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"grossMarginCompensable"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"volumeCompensable"</span><span class="p">:</span><span class="w"> </span><span class="mi">136797</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"numSales"</span><span class="p">:</span><span class="w"> </span><span class="mi">284</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Get sale total aggregates for a given period or date range.</p>
+<h3 id='endpoint-3'>Endpoint</h3>
+<p><code>GET /rest/v1/orgs/:id/sale-totals</code></p>
+<h3 id='query-parameters-3'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>from</td>
+<td>date</td>
+<td>none</td>
+<td>Filter sales by effective date using this start date by e.g. <code>2023-01-01</code></td>
+</tr>
+<tr>
+<td>to</td>
+<td>date</td>
+<td>none</td>
+<td>Filter sales by effective date using this end date by e.g. <code>2023-01-31</code></td>
+</tr>
+<tr>
+<td>fiscalYearId</td>
+<td>id or enum</td>
+<td>none</td>
+<td>Filter sales by effective date using this fiscal year (instead of using from/to), supports pseudo-id values <code>current</code>, <code>previous</code>, and <code>next</code></td>
+</tr>
+<tr>
+<td>fiscalPeriodId</td>
+<td>id or enum</td>
+<td>none</td>
+<td>Filter sales by effective date using this fiscal period (instead of using from/to), supports pseudo-id values <code>current</code>, <code>previous</code>, and <code>next</code></td>
+</tr>
+<tr>
+<td>type</td>
+<td>enum or array</td>
+<td>none</td>
+<td>Filter sales by one or more specific types e.g. <code>txn</code> or <code>churn</code></td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
